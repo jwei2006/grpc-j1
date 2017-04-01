@@ -1,0 +1,59 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.jw.test.grpc</groupId>
+		<artifactId>grpc.example</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>grpc-e-api</artifactId>
+	<dependencies>
+		<dependency>
+			<groupId>shj.teach.core.rpc</groupId>
+			<artifactId>core-grpc-proto</artifactId>
+			<version>0.0.2</version>
+		</dependency>
+	</dependencies>
+	<properties>
+		<version.grpc>1.2.0</version.grpc>
+		<version.protobuf>3.2.0</version.protobuf>
+	</properties>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.xolstice.maven.plugins</groupId>
+				<artifactId>protobuf-maven-plugin</artifactId>
+				<version>0.5.0</version>
+				<configuration>
+					<!-- The version of protoc must match protobuf-java. If you don't depend 
+						on protobuf-java directly, you will be transitively depending on the protobuf-java 
+						version that grpc depends on. -->
+					<!-- <protocArtifact>com.google.protobuf:protoc:3.0.0:exe:${os.detected.classifier}</protocArtifact> -->
+					<!-- <protocArtifact>com.google.protobuf:protoc:${version.protobuf}:exe:windows-x86_64</protocArtifact> -->
+					<protocArtifact>com.google.protobuf:protoc:${version.protobuf}:exe:linux-x86_64</protocArtifact>
+					<pluginId>grpc-java</pluginId>
+					<pluginArtifact>io.grpc:protoc-gen-grpc-java:${version.grpc}:exe:linux-x86_64</pluginArtifact>
+					<!-- <outputDirectory>src/main/java:src/main/grpc</outputDirectory> -->
+					<!-- <protocExecutable>/Users/peng/protoc-3.0.0-beta-2-osx-x86_64/protoc</protocExecutable> -->
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+							<goal>compile-custom</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>**/*.proto</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
